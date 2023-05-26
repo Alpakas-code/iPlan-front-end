@@ -1,0 +1,86 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<div class="container" >
+		<div class="screen">
+			<div class="screen__content">
+				<form class="login" [formGroup]="addForm" #cf="ngForm">
+					<div class="login__field">
+						<i class="login__icon fas fa-user"></i>
+						<input type="email" class="login__input" placeholder="User name / Email" name="email" formControlName="email" required>
+					</div>
+					<div class="login__field">
+						<i class="login__icon fas fa-user"></i>
+						<input type="text" class="login__input" placeholder="First name" name="firstName" formControlName="firstName" required>
+					</div>
+					<div class="login__field">
+						<i class="login__icon fas fa-user"></i>
+						<input type="text" class="login__input" placeholder="Last name" name="lastName" formControlName="lastName" required>
+					</div>
+					<div class="login__field">
+						<i class="login__icon fas fa-user"></i>
+						<input type="text" class="login__input" placeholder="Phone number" name="phoneNumber" formControlName="phoneNumber" required>
+					</div>
+					<div class="login__field">
+						<i class="login__icon fas fa-lock"></i>
+						<input type="password" class="login__input" placeholder="Password" name="password" formControlName="password" required>
+					</div>
+					<div class="login__field">
+						
+						<select class="form-select" aria-label="Default select example" name="company" formControlName="company" required>
+							<option value="1">Select your company </option>
+							<option value="2">Polytech</option>
+							
+						  </select>
+					</div>
+					<div class="login__field">
+						
+						<select class="form-select" aria-label="Default select example" name="role" formControlName="role" required >
+							<option >Select your role </option>
+							<option  value="project Manager">Project Manager</option>
+							<option  value="analyst">Analyst</option>
+							<option  value="back-end developer">Back-end developer</option>
+							<option  value="front-end developer">Front-end developer</option>
+							<option  value="dev-ops engineer">Dev-ops engineer</option>
+							<option  value="ui-ux designer">Ui-ux designer</option>
+							<option  value="architecture designer">Architecture designer</option>
+							<option  value="product owner">Product owner</option>
+							
+						  </select>
+					</div>
+					<button class="button login__submit" (click)="redirectLogin()">
+						<span class="button__text">Log In</span>
+						<i class="button__icon fas fa-chevron-right"></i>
+					</button>
+					<button class="button login__submit" (click)="Signup()" [disabled]="cf.invalid">
+						<span class="button__text">Sign up</span>
+						<i class="button__icon fas fa-chevron-right"></i>
+					</button>				
+				</form>
+				<div class="social-login">
+					<h3>Contact</h3>
+					<div class="social-icons">
+						<a href="#" class="social-login__icon fab fa-instagram"></a>
+						<a href="#" class="social-login__icon fab fa-facebook"></a>
+						<a href="#" class="social-login__icon fab fa-twitter"></a>
+					</div>
+				</div>
+			</div>
+			<div class="screen__background">
+				<span class="screen__background__shape screen__background__shape4"></span>
+				<span class="screen__background__shape screen__background__shape3"></span>		
+				<span class="screen__background__shape screen__background__shape2"></span>
+				<span class="screen__background__shape screen__background__shape1"></span>
+			</div>		
+		</div>
+	</div>
+</body>
+</html>

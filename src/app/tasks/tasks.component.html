@@ -1,0 +1,231 @@
+
+<app-nav-bar></app-nav-bar>
+
+
+
+
+
+
+
+<br><br><br>
+<h1 style="text-align:center;color:rgb(0, 104, 64);font-size: 64px;font-family: Lucida Bright;"> 
+    Tasks for the project x
+</h1>
+<!-- FIX ROLES -->
+<!-- *********************************************************************** -->
+<button class="btn btn-primary"style="position : relative;right : 5%;float :right" (click)="openModal()"> 
+    Add a new Task
+</button>
+
+<button class="btn btn-info"style="position : relative;right : 5%;float :right" (click)="openModalAssign()"> 
+    Assign member
+</button>
+<!-- *////////////////////////////////////*-->
+<!-- MODAL D'ASSIGN DE TASK  -->
+<!-- *////////////////////////////////////*-->
+<div class="modal " tabindex="-1" role="dialog"  [ngStyle]="{'display':displaye}">
+    <div class="modal-dialog" role="document">
+          <div class="modal-content">
+                <div class="modal-header">
+                      <h4 class="modal-title">Add a new Member.</h4>
+                      <button type="button" class="close" aria-label="Close" (click)="onCloseHandledAssign()"><span aria-hidden="true">&times;</span></button>
+                    </div>
+           <div class="modal-body">
+               <form [formGroup]="AssignForm" #c="ngForm">
+                     <div class="form-group">
+                        <label for="message-text" class="col-form-label">Members :</label><br>
+                        <select name="members" style="width: 60%; border-color: rgb(9, 5, 255);" formControlName="members" required>
+                          <option value="0" selected> Select a member</option>
+                          <option value="{{u.userId}}" *ngFor="let u of users; let i =index"> {{i+1}}- {{u.fullName}} </option>
+                          
+                        </select>
+                      </div>
+                   
+                   <div class="form-group">
+                       <label for="message-text" class="col-form-label">Tasks :</label><br>
+                       <select name="status" style="width: 60%; border-color: rgb(9, 5, 255);" formControlName="tasks" required>
+                         <option value="0" selected> Choose the status of the project</option>
+                         <option value="{{t.taskId}}" *ngFor="let t of tasks;"> {{ t.title}}</option>
+                         
+                       </select>
+                     </div>
+                 </form>
+                    </div>
+                <div class="modal-footer">
+                   <button type="button" class="btn btn-success" (click)="AssignMemberToTask()" [disabled]="c.invalid">Save</button>
+                   <button type="button" class="btn btn-danger" (click)="onCloseHandledAssign()" >Close</button>
+                </div>
+       </div>
+        </div>
+</div>
+
+<!-- *////////////////////////////////////*-->
+<!-- MODAL D'AJOUT DE TASK  -->
+<!-- *////////////////////////////////////*-->
+    <div class="modal " tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
+         <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                     <div class="modal-header">
+                           <h4 class="modal-title">Add a new Task.</h4>
+                           <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span aria-hidden="true">&times;</span></button>
+                         </div>
+                <div class="modal-body">
+                    <form [formGroup]="addForm" #cf="ngForm">
+                        <div class="form-group">
+                          <label for="recipient-name" class="col-form-label">Title:</label>
+                          <input type="text" class="form-control" id="recipient-name" style="border-color: rgb(9, 5, 255);" placeholder="Enter your name" formControlName="title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Description:</label>
+                            <input type="text" class="form-control" id="recipient-name" style="border-color: rgb(9, 5, 255);" placeholder="Enter the description" formControlName="description" required>
+                          </div>
+                          <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Type	:</label>
+                            <input type="text" class="form-control" id="recipient-name" style="border-color: rgb(9, 5, 255);" placeholder="Enter the type" formControlName="type" required>
+                          </div>
+                          <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Task Points	:</label>
+                            <input type="text" class="form-control" id="recipient-name" style="border-color: rgb(9, 5, 255);" placeholder="Enter the Task points" formControlName="taskpoints" required>
+                          </div>
+                        <div class="form-group">
+                          <label for="message-text" class="col-form-label">Priority :</label><br>
+                          <select name="status" style="width: 60%; border-color: rgb(9, 5, 255);" formControlName="priority" required>
+                            <option value="0" selected> Choose the priority of the task</option>
+                            <option value="HIGH" style="color:red;font-weight: bold;"> 1- HIGH</option>
+                            <option value="MEDIUM" style="color :rgb(197, 177, 0);font-weight: bold;"> 2- MEDIUM </option>
+                            <option value="LOW" style="color:rgb(158, 158, 158);font-weight: bold;"> 3- LOW</option>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Status :</label><br>
+                            <select name="status" style="width: 60%; border-color: rgb(9, 5, 255);" formControlName="status" required>
+                              <option value="0" selected> Choose the status of the project</option>
+                              <option value="1"> 1- Ready for developement</option>
+                              <option value="2"> 2- In-Progress </option>
+                              <option value="3"> 3- Done</option>
+                            </select>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-success" (click)="addTask()" [disabled]="cf.invalid">Save</button>
+                            <button type="button" class="btn btn-danger" (click)="onCloseHandled()" >Close</button>
+                         </div>
+                      </form>
+                         </div>
+                     
+            </div>
+             </div>
+ </div>
+ 
+
+<br><br><br><br><br> 
+<!--  HIGH PRIO     Ready FOR DEV IN-PROGRESS DONE (3 STATUS) -->
+<!-- TODO In progress done -->
+<div class="main">
+    
+        <span style="color:rgb(0, 0, 0); font-size: 32px;">- Status : </span><span style="color:rgb(0, 197, 33);font-weight: bold; font-family: Cambria;font-size: 30px;text-shadow: 10px">READY FOR DEV </span>
+     
+    <ul class="cards">
+      <li class="cards_item" *ngFor="let t of rdf">
+        <div *ngIf="t.status == 1">
+          <div class="card" style="width: 18rem;" >
+            <img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI1OjKY1KKU5K4Yym9v7bJbBQoJuskcHgx8A&usqp=CAU" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">Title :{{t.title}}</h5>
+              <p class="card-text">Description :{{t.description}}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Task Point : {{t.taskPoints}} day</li>
+              <li class="list-group-item">Type : {{t.type}}</li>
+              <li class="list-group-item">Priority : {{t.priority}}</li>
+            </ul>
+            <div class="card-body">
+                <table style="text-align: center;position: absolute;left:21%;bottom: 0%;">
+                    <tr>
+                        <td><button class="btn btn-danger" (click)="delete(t.taskId);"> Delete </button> </td> <td><button class="btn btn-primary" style="width: 75px;"> Edit </button> </td>
+                    </tr>
+                  </table>
+            </div>
+          </div>
+        </div>
+        
+      </li>
+  
+    </ul>
+
+  </div>
+
+
+
+
+  <br><br><br><br><br><br><br><br>
+  <!--  MEDIUM PRIO  -->
+  
+  <div class="main">
+    <span style="color:rgb(0, 0, 0); font-size: 32px;">- Status : </span><span style="color:rgb(255, 231, 13);font-weight: bold; font-family: Cambria;font-size: 30px;text-shadow: 10px">IN-PROGRESS </span>
+    <ul class="cards">
+      <li class="cards_item" *ngFor="let t of ip">
+        
+          <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI1OjKY1KKU5K4Yym9v7bJbBQoJuskcHgx8A&usqp=CAU" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">Title :{{t.title}}</h5>
+              <p class="card-text">Description :{{t.description}}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Task Point : {{t.taskPoints}} day</li>
+              <li class="list-group-item">Type : {{t.type}}</li>
+              <li class="list-group-item">Priority : {{t.priority}}</li>
+            </ul>
+            <div class="card-body">
+                <table style="text-align: center;position: absolute;left:21%;bottom: 0%;">
+                    <tr>
+                        <td><button class="btn btn-danger" (click)="delete(t.taskId);"> Delete </button> </td> <td><button class="btn btn-primary" style="width: 75px;"> Edit </button> </td>
+                    </tr>
+                  </table>
+          </div>
+        </div>
+        
+      </li>
+  
+      
+    </ul>
+    
+  </div>
+
+
+
+  <br><br><br><br><br><br><br><br>
+   <!--  LOW PRIO  -->
+   <div class="main">
+    <span style="color:rgb(0, 0, 0); font-size: 32px;">- Status : </span><span style="color:rgb(158, 158, 158);font-weight: bold; font-family: Cambria;font-size: 30px;text-shadow: 10px">DONE </span>
+    <ul class="cards">
+      <li class="cards_item" *ngFor="let t of done">
+        
+          <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI1OjKY1KKU5K4Yym9v7bJbBQoJuskcHgx8A&usqp=CAU" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">Title :{{t.title}}</h5>
+              <p class="card-text">Description :{{t.description}}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Task Point : {{t.taskPoints}} day</li>
+              <li class="list-group-item">Type : {{t.type}}</li>
+              <li class="list-group-item">Priority : {{t.priority}}</li>
+            </ul>
+            <div class="card-body">
+                <table style="text-align: center;position: absolute;left:21%;bottom: 0%;">
+                    <tr>
+                        <td><button class="btn btn-danger" (click)="delete(t.taskId);"> Delete </button> </td> <td><button class="btn btn-primary" style="width: 75px;"> Edit </button> </td>
+                    </tr>
+                  </table>
+            </div>
+          </div>
+        
+        
+      </li>
+  
+      
+    </ul>
+   
+  </div>
+  <br><br><br><br><br><br><br>

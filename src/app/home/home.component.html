@@ -1,0 +1,182 @@
+
+<app-nav-bar></app-nav-bar>
+<br><br>
+<h1 style="text-align:center;color:rgb(0, 0, 104);font-size: 64px;font-family: Lucida Bright;"> 
+    Projects
+</h1>
+
+<!-- FIX ROLES -->
+<!-- *********************************************************************** -->
+<button class="btn btn-primary"style="position : relative;right : 5%;float :right" (click)="openModal()"> 
+    Add a new project
+</button>
+<button class="btn btn-primary"style="position : relative;right : 5%;float :right" (click)="openModale()"> 
+    Assign member
+</button>
+<!-- */////////////////////////*-->
+<!-- MODAL ASSIGN MEMBER -->
+<!-- */////////////////////////*-->
+<div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':displaye}">
+    <div class="modal-dialog" role="document">
+          <div class="modal-content">
+                <div class="modal-header">
+                      <h4 class="modal-title">Assign a member to a project.</h4>
+                      <button type="button" class="close" aria-label="Close" (click)="onCloseHandlede()"><span aria-hidden="true">&times;</span></button>
+                    </div>
+           <div class="modal-body">
+               <form [formGroup]="AssignForm" #ce="ngForm">
+                   
+                   <div class="form-group">
+                    <label for="message-text" class="col-form-label">Members :</label><br>
+                    <select name="members" style="width: 60%; border-color: rgb(9, 5, 255);" formControlName="members" required>
+                      <option value="0" selected> Select a member</option>
+                      <option value="{{u.userId}}" *ngFor="let u of users; let i =index"> {{i+1}}- {{u.fullName}} </option>
+                      
+                    </select>
+                  </div>
+                   <div class="form-group">
+                     <label for="message-text" class="col-form-label">Projects :</label><br>
+                     <select name="projects" style="width: 60%; border-color: rgb(9, 5, 255);" formControlName="projects" required>
+                       <option value="0"> Select a project</option>
+                       <option value="{{pro.projectId}}" *ngFor="let pro of p; let i =index"> {{i+1}}- {{pro.name}}</option>
+                       
+                     </select>
+                   </div>
+                 </form>
+                    </div>
+                <div class="modal-footer">
+                   <button type="button" class="btn btn-success" (click)="AssignMember()" [disabled]="ce.invalid">Save</button>
+                   <button type="button" class="btn btn-danger" (click)="onCloseHandlede()" >Close</button>
+                </div>
+       </div>
+        </div>
+</div>
+
+<!-- */////////////////////////*-->
+<!-- MODAL ADD PROJECT -->
+<!-- */////////////////////////*-->
+    <div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
+         <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                     <div class="modal-header">
+                           <h4 class="modal-title">Add a new Project.</h4>
+                           <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span aria-hidden="true">&times;</span></button>
+                         </div>
+                <div class="modal-body">
+                    <form [formGroup]="addForm" #cf="ngForm">
+                        <div class="form-group">
+                          <label for="recipient-name" class="col-form-label">Name:</label>
+                          <input type="text" class="form-control" id="recipient-name" style="border-color: rgb(9, 5, 255);" placeholder="Enter your name" formControlName="projectName" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="message-text" class="col-form-label">Status :</label><br>
+                          <select name="status" style="width: 60%; border-color: rgb(9, 5, 255);" formControlName="status" required>
+                            <option value="0"> Choose the status of the project</option>
+                            <option value="1"> 1- Ready for developement</option>
+                            <option value="2"> 2- In-Progress </option>
+                            <option value="3"> 3- Done</option>
+                          </select>
+                        </div>
+                      </form>
+                         </div>
+                     <div class="modal-footer">
+                        <button type="button" class="btn btn-success" (click)="addProject()" [disabled]="cf.invalid">Save</button>
+                        <button type="button" class="btn btn-danger" (click)="onCloseHandled()" >Close</button>
+                     </div>
+            </div>
+             </div>
+ </div>
+ 
+
+<br><br><br><br><br> 
+<!--  HIGH PRIO     Ready FOR DEV IN-PROGRESS DONE (3 STATUS) -->
+<!-- TODO In progress done -->
+<div class="main">
+    
+        <span style="color:rgb(0, 0, 0); font-size: 32px;">- Status : </span><span style="color:rgb(0, 197, 33);font-weight: bold; font-family: Cambria;font-size: 30px;text-shadow: 10px">READY FOR DEV </span>
+     
+    <ul class="cards">
+      <li class="cards_item" *ngFor="let d of rdf; let i = index;">
+        <div class="card" *ngIf="i<3">
+          <div class="card_image">
+            <img src="https://cdn.hornbach.lu/data/shop/D04/001/780/491/235/677/DV_8_5907573_01_4c_DE_20170919221656.jpg" alt="mixed vegetable salad in a mason jar." />
+            <span class="card_price"><span> </span>RFD</span>
+          </div>
+          <div class="card_content">
+            <h2 class="card_title">{{d.name}}</h2>
+            <div class="card_text">
+              <p> Team Collaborators : {{d.teamMembers}}
+              </p>
+              <hr />
+             
+            </div>
+          </div>
+        </div>
+      </li>
+        
+    </ul>
+    <h3 style="text-align: center;"><a routerLink="/projects/show/1" style="text-decoration: none;color: rgb(146, 127, 100);">Show more ...</a></h3>
+  </div>
+
+
+
+
+  <br><br><br><br><br><br><br><br>
+  <!--  MEDIUM PRIO  -->
+  
+  <div class="main">
+    <span style="color:rgb(0, 0, 0); font-size: 32px;">- Status : </span><span style="color:rgb(255, 231, 13);font-weight: bold; font-family: Cambria;font-size: 30px;text-shadow: 10px">IN-PROGRESS </span>
+    <ul class="cards">
+      <li class="cards_item" *ngFor="let d of ip; let i = index">
+        <div class="card" *ngIf="i<3">
+          <div class="card_image" >
+            <img src="https://cdn.hornbach.lu/data/shop/D04/001/780/491/235/677/DV_8_5907573_01_4c_DE_20170919221656.jpg" alt="mixed vegetable salad in a mason jar." />
+            <span class="card_price"><span></span>IN-P</span>
+          </div>
+          <div class="card_content">
+            <h2 class="card_title">{{d.name}}</h2>
+            <div class="card_text">
+              <p>Team Collaborators : {{d.teamMembers}}
+              </p>
+              <hr />
+              
+            </div>
+          </div>
+        </div>
+      </li>
+  
+      
+    </ul>
+    <h3 style="text-align: center;"><a routerLink="/projects/show/2" style="text-decoration: none;color: rgb(146, 127, 100);">Show more ...</a></h3>
+  </div>
+
+
+
+  <br><br><br><br><br><br><br><br>
+   <!--  LOW PRIO  -->
+   <div class="main">
+    <span style="color:rgb(0, 0, 0); font-size: 32px;">- Status : </span><span style="color:rgb(158, 158, 158);font-weight: bold; font-family: Cambria;font-size: 30px;text-shadow: 10px">DONE </span>
+    <ul class="cards">
+      <li class="cards_item" *ngFor="let d of done; let i =index" >
+        <div class="card" *ngIf="i<3">
+          <div class="card_image">
+            <img src="https://cdn.hornbach.lu/data/shop/D04/001/780/491/235/677/DV_8_5907573_01_4c_DE_20170919221656.jpg" alt="mixed vegetable salad in a mason jar." />
+            <span class="card_price"><span></span>DONE</span>
+          </div>
+          <div class="card_content">
+            <h2 class="card_title">{{ d.name }}</h2>
+            <div class="card_text">
+              <p>Team Collaborators : {{d.teamMembers}}
+              </p>
+              <hr />
+              
+            </div>
+          </div>
+        </div>
+      </li>
+  
+      
+    </ul>
+    <h3 style="text-align: center;"><a routerLink="/projects/show/3" style="text-decoration: none;color: rgb(146, 127, 100);">Show more ...</a></h3>
+  </div>
+  <br><br><br><br><br><br><br>

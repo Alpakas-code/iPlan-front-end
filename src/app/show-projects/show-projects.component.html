@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+</head>
+<body>
+  <app-nav-bar></app-nav-bar>
+  <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display': display}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Update a project.</h4>
+          <button type="button" class="close" aria-label="Close" (click)="onCloseHandlede()"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="updateForm" #updateform="ngForm">
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Name:</label>
+              <input type="text" class="form-control" id="recipient-name" style="border-color: rgb(9, 5, 255);" placeholder="Enter your name" value="{{name}}" formControlName="projectName" required>
+            </div>
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">Status:</label><br>
+              <select name="status" style="width: 60%; border-color: rgb(9, 5, 255);" formControlName="status" required>
+                <option value="0">Choose the status of the project</option>
+                <option value="1">1- Ready for development</option>
+                <option value="2">2- In-Progress</option>
+                <option value="3">3- Done</option>
+              </select>
+            </div>
+            <input type="hidden" name="projectId" formControlName="projectId" value="{{projectId}}">
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success" (click)="update(name, projectId)">Save</button>
+              <button type="button" class="btn btn-danger" (click)="onCloseHandlede()" [disabled]="updateform.invalid">Close</button>
+            </div>
+          </form>
+        </div>
+       
+      </div>
+    </div>
+  </div>
+  <!-- STATUS 1 -->
+  <div *ngIf="status == 1">
+    <h1 style="color: green; text-align: center; padding: 40px; font-weight: bold;">Ready for development</h1> 
+    <br>
+    <div class="main">
+      <ul class="cards">
+        <li class="cards_item" *ngFor="let d of rdf;">
+          
+          <div class="card">
+            <a routerLink="/tasks/{{d.projectId}}" style="text-decoration: none; text-transform: none; color:black">
+              <div class="card_image">
+                <input type="hidden" value="1" />
+                <img src="https://cdn.hornbach.lu/data/shop/D04/001/780/491/235/677/DV_8_5907573_01_4c_DE_20170919221656.jpg" alt="mixed vegetable salad in a mason jar." />
+                <span class="card_price"><span></span>RFD</span>
+              </div>
+            </a>
+            <div class="card_content">
+              <h2 class="card_title">{{d.name}}</h2>
+              <div class="card_text">
+                <p>Number of collaborators: {{ d.teamMembers }}</p>
+                <hr />
+                <!-- MODAL ASSIGN MEMBER -->
+                <table style="text-align: center; position: absolute; left: 28%; bottom: 2%;">
+                  <tr>
+                    <td><button class="btn btn-danger" (click)="delete(d.projectId)">Delete</button></td>
+                    <td><button class="btn btn-primary" style="width: 75px;" (click)="openModale(d.projectId, d.name)">Edit</button></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- STATUS 2 -->
+  <div *ngIf="status == 2">
+    <h1 style="color: rgb(207, 176, 0); text-align: center; padding: 40px; font-weight: bold;">IN PROGRESS</h1> 
+    <br>
+    <div class="main">
+      
+      <ul class="cards">
+        <li class="cards_item" *ngFor="let d of ip;">
+          <div class="card">
+            <a routerLink="/tasks/{{d.projectId}}" style="text-decoration: none; text-transform: none; color:black">
+              <div class="card_image">
+                <img src="https://cdn.hornbach.lu/data/shop/D04/001/780/491/235/677/DV_8_5907573_01_4c_DE_20170919221656.jpg" alt="mixed vegetable salad in a mason jar." />
+                <span class="card_price"><span></span>IN-PROG</span>
+              </div>
+            </a>
+            <div class="card_content">
+              <h2 class="card_title">{{d.name}}</h2>
+              <div class="card_text">
+                <p>Team Collaborators:</p>
+                <hr />
+                <table style="text-align: center; position: absolute; left: 28%; bottom: 2%;">
+                  <tr>
+                    <td><button class="btn btn-danger" (click)="delete(d.projectId)">Delete</button></td>
+                    <td><button class="btn btn-primary" style="width: 75px;" (click)="openModale(d.projectId, d.name)">Edit</button></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- STATUS 3 -->
+  <div *ngIf="status == 3">
+    <h1 style="color: rgb(163, 163, 163); text-align: center; padding: 40px; font-weight: bold;">DONE</h1> 
+    <br>
+    <div class="main">
+      <ul class="cards">
+        <li class="cards_item" *ngFor="let d of done;">
+          <div class="card">
+            <a routerLink="/tasks/{{d.projectId}}" style="text-decoration: none; text-transform: none; color:black">
+              <div class="card_image">
+                <input type="hidden" value="1" />
+                <img src="https://cdn.hornbach.lu/data/shop/D04/001/780/491/235/677/DV_8_5907573_01_4c_DE_20170919221656.jpg" alt="mixed vegetable salad in a mason jar." />
+                <span class="card_price"><span></span>Done</span>
+              </div>
+            </a>
+            <div class="card_content">
+              <h2 class="card_title">{{d.name}}</h2>
+              <div class="card_text">
+                <p>Number of collaborators:</p>
+                <hr />
+                <table style="text-align: center; position: absolute; left: 28%; bottom: 2%;">
+                  <tr>
+                    <td><button class="btn btn-danger" (click)="delete(d.projectId)">Delete</button></td>
+                    <td><button class="btn btn-primary" style="width: 75px;" (click)="openModale(d.projectId, d.name)">Edit</button></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</body>
+</html>
